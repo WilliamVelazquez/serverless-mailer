@@ -7,7 +7,9 @@
   "author": "William Velazquez <william.velazquez.a@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "nodemailer": "6.2.1",
-    "serverless": "1.44.1"
+    "nodemailer": "6.2.1"
+  },
+  "devDependencies": {
+    "serverless-google-cloudfunctions": "2.3.2"
   }
 }
