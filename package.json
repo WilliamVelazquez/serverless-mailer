@@ -2,7 +2,7 @@
   "name": "serverless-mailer",
   "version": "1.0.0",
   "description": "Serverless mailer for static sites using Serverless Framework and Nodemailer(Node.js)",
-  "main": "index.js",
+  "main": "handler.js",
   "repository": "https://github.com/WilliamVelazquez/serverless-mailer.git",
   "author": "William Velazquez <william.velazquez.a@gmail.com>",
   "license": "MIT",

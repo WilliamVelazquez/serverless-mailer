@@ -1,19 +1,8 @@
 'use strict';
 const nodeMailer = require('nodemailer');
 
-var CONTACT_ADDRESS = 'info@williamvelazquez.com';
-// var querystring = require('querystring');
-
-// var mailer = require('nodemailer').createTransport({
-//   service: 'Gmail',
-//   auth: {
-//     user: process.env.GMAIL_ADDRESS,
-//     pass: process.env.GMAIL_PASSWORD,
-//   }
-// });
-
 const transporter = nodemailer.createTransport({
-  host: 'smtp.host.tld', //host: "smtp.gmail.com",
+  host: 'mail.privateemail.com',//'smtp.host.tld', //host: "smtp.gmail.com",
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
@@ -23,31 +12,44 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports.contact = (event, context, callback) => {
-  //var body = querystring.parse(event.body);
-  // let body = 'Body Test';
+  console.log("event-->", event);
+  console.log("context-->", context);
+  console.log("callback-->", callback);
+
   const body = '';
   const mailOpts = {
     from: body.from || '"Fred Foo 👻" <foo@example.com>',
-    to: CONTACT_ADDRESS,
+    to: process.env.CONTACT_ADDRESS,
     //bcc: body.bcc || '',
     subject: body.subject || '[No subject]' + Date.now(),
     text: body.text || 'Test Text Body', // plain text body
     html: body.message || '[No message]  <p><b>Hello<br/>World!</b></p>' // html body
   };
 
-  transporter.sendMail(mailOpts, (error, info) => {
-    // if (err) return callback(err);
-    // callback(null, { statusCode: 200, body: 'Success!' });
+  // verify connection configuration
+  transporter.verify(function(error, success) {
     if (error) {
-      console.log('Error occurred--->');
-      console.log(error.message);
-      return process.exit(1);
+      console.log(error);
+    } else {
+      console.log("Server is ready to take our messages");
     }
+  });
 
-    console.log('Message sent successfully--->');
-    console.log(nodemailer.getTestMessageUrl(info));
+  transporter.sendMail(mailOpts, (error, info) => {
+    const response = {
+      statusCode: error ? 500 : 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'https://your-domain.com'
+      },
+      body: JSON.stringify({
+        message: error ? error.message : info
+      })
+    }
 
     // only needed when using pooled connections
     // transporter.close();
+
+    return callback(null, response);
   });
 };
