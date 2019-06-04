@@ -11,10 +11,11 @@ const transporter = nodeMailer.createTransport({
   }
 });
 
-module.exports.contact = (event, context, callback) => {
-  console.log("event-->", event);
-  console.log("context-->", context);
-  console.log("callback-->", callback);
+// module.exports.contact = (event, context, callback) => {
+module.exports.contact = (req, res) => {
+  console.log("req-->", req);
+  console.log("res-->", res);
+  // console.log("callback-->", callback);
 
   const body = '';
   const mailOpts = {
@@ -50,6 +51,8 @@ module.exports.contact = (event, context, callback) => {
     // only needed when using pooled connections
     // transporter.close();
 
-    return callback(null, response);
+    // return callback(null, response);
+    // res.status(400).send(response)
+    res.send(response);
   });
 };
