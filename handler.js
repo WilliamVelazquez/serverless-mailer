@@ -1,7 +1,7 @@
 'use strict';
 const nodeMailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
+const transporter = nodeMailer.createTransport({
   host: 'mail.privateemail.com',//'smtp.host.tld', //host: "smtp.gmail.com",
   port: 465,
   secure: true, // true for 465, false for other ports
