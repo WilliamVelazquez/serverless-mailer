@@ -17,10 +17,12 @@ module.exports.contact = (req, res) => {
   console.log("res-->", res);
   // console.log("callback-->", callback);
 
-  const body = '';
+  const body = req.body;
+  console.log("body-->", body);
   const mailOpts = {
-    from: body.from || '"Fred Foo 👻" <foo@example.com>',
-    to: process.env.CONTACT_ADDRESS,
+    from: body.from || `"Fred Foo 👻" <${process.env.CONTACT_ADDRESS}>`,
+    to: process.env.process.env.EMAIL_ADDRESS,
+    //cc: [],
     //bcc: body.bcc || '',
     subject: body.subject || '[No subject]' + Date.now(),
     text: body.text || 'Test Text Body', // plain text body
@@ -32,7 +34,7 @@ module.exports.contact = (req, res) => {
     if (error) {
       console.log(error);
     } else {
-      console.log("Server is ready to take our messages");
+      console.log("Server is ready to send messages");
     }
   });
 
@@ -41,18 +43,15 @@ module.exports.contact = (req, res) => {
       statusCode: error ? 500 : 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': 'https://your-domain.com'
+        'Access-Control-Allow-Origin': process.env.DOMAIN_NAME
       },
       body: JSON.stringify({
         message: error ? error.message : info
       })
     }
+    res.send(response);
 
     // only needed when using pooled connections
     // transporter.close();
-
-    // return callback(null, response);
-    // res.status(400).send(response)
-    res.send(response);
   });
 };
