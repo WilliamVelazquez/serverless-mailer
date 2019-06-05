@@ -16,7 +16,7 @@ const today = () => {
   var y = now.getFullYear();
   var m = now.getMonth() + 1;
   var d = now.getDate();
-  return ` ${y}-${m < 10 ? '0' : ''}-${m}-${d < 10 ? '0' : ''}-${d}`;
+  return ` ${y}-${m < 10 ? '0' : ''}${m}-${d < 10 ? '0' : ''}${d}`;
 }
 
 // module.exports.contact = (event, context, callback) => {
@@ -41,10 +41,17 @@ module.exports.contact = (req, res) => {
             <p><b>Phone: </b>${body.phone||'-'}</p>
             <p><b>Comments: </b>${body.comments||'-'}</p>
             <p><b>Want a call? </b>${body.callBack?'Yes':'No'}</p>
-            <br>
-            <span style='text-align:center;'>${today()}</span>
+            <br />
+            <span style='text-align: center; font-weight: bold;'>Contact Date: ${today()}</span>
+            <br />
+            <img src='cid:${process.env.DOMAIN_NAME}'/>
           </div>` 
-    || `[No message] 💻 ${today()}` // html body
+    || `[No message] 💻 ${today()}`, // html body
+    attachments: [{
+      filename: 'Logo_192.png',
+      path: '/images',
+      cid: process.env.DOMAIN_NAME //same cid value as in the html img src
+    }]
   };
 
   // verify connection configuration
