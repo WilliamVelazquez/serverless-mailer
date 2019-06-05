@@ -21,7 +21,7 @@ module.exports.contact = (req, res) => {
   console.log("body-->", body);
   const mailOpts = {
     from: body.from || `"Fred Foo 👻" <${process.env.CONTACT_ADDRESS}>`,
-    to: process.env.process.env.EMAIL_ADDRESS,
+    to: process.env.EMAIL_ADDRESS,
     //cc: [],
     //bcc: body.bcc || '',
     subject: body.subject || '[No subject]' + Date.now(),
