@@ -9,8 +9,8 @@ const getDateTime = () => {
   const month = now.getMonth() + 1;
   const day = now.getDate();
   const hour = now.getHours();
-  const minutes = now.getHours();
-  const seconds = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
   const dateTime = `${year}/${month<10 ? `0${month}`:month}/${day<10 ? `0${day}`:day}
                     ${hour}:${minutes<10? `0${minutes}`:minutes}:${seconds<10? `0${seconds}`:seconds}`;
   return dateTime;
